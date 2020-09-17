@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,5 +36,14 @@ public class SmallLockerTest {
         SmallBag takenBag = smallLocker.take(smallTicket);
 
         assertEquals(smallBag, takenBag);
+    }
+
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_invalid_exception_when_take_bag_given_small_locker_and_invalid_small_ticket() {
+        SmallLocker smallLocker = new SmallLocker(10);
+        smallLocker.save(new SmallBag());
+        SmallTicket invalidSmallTicket = new SmallTicket();
+
+        smallLocker.take(invalidSmallTicket);
     }
 }

@@ -1,5 +1,4 @@
 ## Locker
-### Small Locker
 Given: Small Locker有剩余容量, 包裹尺寸为S的包
 When：存包
 Then：存包成功，返回一张Small型号的票
@@ -17,48 +16,6 @@ When：取包
 Then：取包失败，提示票无效
 
 Given：Small Locker，不是small型号的票
-When：取包
-Then：取包失败，提示票的型号不对
-
-### Medium Locker
-Given: Medium Locker有剩余容量, 包裹尺寸为M的包
-When：存包
-Then：存包成功，返回一张Medium型号的票
-
-Given：Medium Locker已满，包裹尺寸为M的包
-When：存包
-Then：存包失败，提示已满
-
-Given：Medium Locker，一张Medium型号票
-When：取包
-Then：返回票对应的包
-
-Given：Medium Locker，一张无效的Medium型号的票
-When：取包
-Then：取包失败，提示票无效
-
-Given：Medium Locker，不是Medium型号的票
-When：取包
-Then：取包失败，提示票的型号不对
-
-### Large Locker
-Given: Large Locker有剩余容量, 包裹尺寸为L的包
-When：存包
-Then：存包成功，返回一张Large型号的票
-
-Given：Large Locker已满，包裹尺寸为L的包
-When：存包
-Then：存包失败，提示已满
-
-Given：Large Locker，一张Large型号票
-When：取包
-Then：返回票对应的包
-
-Given：Large Locker，一张无效的Large型号的票
-When：取包
-Then：取包失败，提示票无效
-
-Given：Large Locker，不是Large型号的票
 When：取包
 Then：取包失败，提示票的型号不对
 

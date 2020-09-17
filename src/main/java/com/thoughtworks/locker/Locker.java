@@ -1,34 +1,35 @@
 package com.thoughtworks.locker;
 
-import com.thoughtworks.locker.bag.SmallBag;
+import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
-import com.thoughtworks.locker.ticket.SmallTicket;
-import com.thoughtworks.locker.ticket.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SmallLocker {
+public class Locker {
     private final int capacity;
-    private Map<Ticket, SmallBag> ticketBagMap = new HashMap<>();
-    public SmallLocker(int capacity) {
+    private final Type type;
+    private final Map<Ticket, Bag> ticketBagMap = new HashMap<>();
+
+    public Locker(Type type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
     }
 
-    public SmallTicket save(SmallBag smallBag) {
+    public Ticket save(Bag bag) {
         if (isFull()) {
             throw new FullCapacityException();
         }
 
-        SmallTicket smallTicket = new SmallTicket();
-        ticketBagMap.put(smallTicket, smallBag);
-        return smallTicket;
+        Ticket ticket = new Ticket(Type.S);
+        ticketBagMap.put(ticket, bag);
+        return ticket;
     }
 
-    public SmallBag take(Ticket ticket) {
-        if (!isSmallTicket(ticket)) {
+    public Bag take(Ticket ticket) {
+        if (!isTypeMatched(ticket.getType())) {
             throw new IncorrectTicketTypeException();
         }
         if (!isContain(ticket)) {
@@ -38,8 +39,8 @@ public class SmallLocker {
         return ticketBagMap.remove(ticket);
     }
 
-    private boolean isSmallTicket(Ticket ticket) {
-        return ticket instanceof SmallTicket;
+    private boolean isTypeMatched(Type ticketType) {
+        return ticketType == type;
     }
 
     private boolean isFull() {

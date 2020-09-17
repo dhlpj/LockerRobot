@@ -1,6 +1,8 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 
 import java.util.List;
@@ -22,10 +24,18 @@ public class PrimaryLockerRobot {
     }
 
     public Bag take(Ticket mediumTicket) {
+        if (!isTypeMatched(mediumTicket.getType())) {
+            throw new IncorrectTicketTypeException();
+        }
+
         return mediumLockers.stream()
                 .filter(locker -> locker.isContain(mediumTicket))
                 .findFirst()
                 .map(locker -> locker.take(mediumTicket))
                 .orElseThrow(TicketInvalidException::new);
+    }
+
+    private boolean isTypeMatched(Type ticketType) {
+        return ticketType == Type.M;
     }
 }

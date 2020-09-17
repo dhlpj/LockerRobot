@@ -2,6 +2,7 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;
 
@@ -87,5 +88,15 @@ public class PrimaryLockerRobotTest {
         Ticket invalidMediumTicket = new Ticket(Type.M);
 
         primaryLockerRobot.take(invalidMediumTicket);
+    }
+
+    @Test(expected = IncorrectTicketTypeException.class)
+    public void should_throw_incorrect_ticket_type_exception_when_take_bag_given_not_medium_ticket() {
+        Locker mediumLocker = new Locker(Type.M, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(mediumLocker));
+        primaryLockerRobot.save(new Bag(Type.M));
+        Ticket smallTicket = new Ticket(Type.S);
+
+        primaryLockerRobot.take(smallTicket);
     }
 }

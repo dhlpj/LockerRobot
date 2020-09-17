@@ -19,4 +19,12 @@ public class PrimaryLockerRobot {
                 .map(locker -> locker.save(mediumBag))
                 .orElseThrow(FullCapacityException::new);
     }
+
+    public Bag take(Ticket mediumTicket) {
+        return mediumLockers.stream()
+                .filter(locker -> locker.isContain(mediumTicket))
+                .findFirst()
+                .map(locker -> locker.take(mediumTicket))
+                .orElse(null);
+    }
 }

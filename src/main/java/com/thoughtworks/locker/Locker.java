@@ -47,7 +47,7 @@ public class Locker {
         return ticketBagMap.size() >= capacity;
     }
 
-    private boolean isContain(Ticket ticket) {
+    public boolean isContain(Ticket ticket) {
         return ticketBagMap.containsKey(ticket);
     }
 }

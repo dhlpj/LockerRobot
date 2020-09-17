@@ -5,6 +5,7 @@ import com.thoughtworks.locker.exception.FullCapacityException;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -63,5 +64,17 @@ public class PrimaryLockerRobotTest {
         Bag mediumBag = new Bag(Type.M);
 
         primaryLockerRobot.save(mediumBag);
+    }
+
+    @Test
+    public void should_return_bag_when_take_bag_given_correct_medium_ticket() {
+        Locker mediumLocker = new Locker(Type.M, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(mediumLocker));
+        Bag mediumBag = new Bag(Type.M);
+        Ticket mediumTicket = primaryLockerRobot.save(mediumBag);
+
+        Bag takenBag = primaryLockerRobot.take(mediumTicket);
+
+        assertEquals(mediumBag, takenBag);
     }
 }

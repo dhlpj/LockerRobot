@@ -23,7 +23,7 @@ public class Locker {
             throw new FullCapacityException();
         }
 
-        Ticket ticket = new Ticket(Type.S);
+        Ticket ticket = new Ticket(type);
         ticketBagMap.put(ticket, bag);
         return ticket;
     }
@@ -43,7 +43,7 @@ public class Locker {
         return ticketType == type;
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return ticketBagMap.size() >= capacity;
     }
 

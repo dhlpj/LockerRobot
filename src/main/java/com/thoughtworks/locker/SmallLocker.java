@@ -1,14 +1,17 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import com.thoughtworks.locker.ticket.SmallTicket;
+import com.thoughtworks.locker.ticket.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SmallLocker {
     private final int capacity;
-    private Map<SmallTicket, SmallBag> ticketBagMap = new HashMap<>();
+    private Map<Ticket, SmallBag> ticketBagMap = new HashMap<>();
     public SmallLocker(int capacity) {
         this.capacity = capacity;
     }
@@ -23,18 +26,26 @@ public class SmallLocker {
         return smallTicket;
     }
 
-    public SmallBag take(SmallTicket smallTicket) {
-        if (!isContain(smallTicket)) {
+    public SmallBag take(Ticket ticket) {
+        if (!isSmallTicket(ticket)) {
+            throw new IncorrectTicketTypeException();
+        }
+        if (!isContain(ticket)) {
             throw new TicketInvalidException();
         }
-        return ticketBagMap.remove(smallTicket);
+
+        return ticketBagMap.remove(ticket);
+    }
+
+    private boolean isSmallTicket(Ticket ticket) {
+        return ticket instanceof SmallTicket;
     }
 
     private boolean isFull() {
         return ticketBagMap.size() >= capacity;
     }
 
-    private boolean isContain(SmallTicket smallTicket) {
-        return ticketBagMap.containsKey(smallTicket);
+    private boolean isContain(Ticket ticket) {
+        return ticketBagMap.containsKey(ticket);
     }
 }

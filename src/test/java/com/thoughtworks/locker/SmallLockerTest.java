@@ -1,7 +1,10 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import com.thoughtworks.locker.ticket.MediumTicket;
+import com.thoughtworks.locker.ticket.SmallTicket;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,5 +48,14 @@ public class SmallLockerTest {
         SmallTicket invalidSmallTicket = new SmallTicket();
 
         smallLocker.take(invalidSmallTicket);
+    }
+
+    @Test(expected = IncorrectTicketTypeException.class)
+    public void should_throw_incorrect_ticket_type_exception_when_take_bag_given_small_locker_and_not_small_ticket() {
+        SmallLocker smallLocker = new SmallLocker(10);
+        smallLocker.save(new SmallBag());
+        MediumTicket mediumTicket = new MediumTicket();
+
+        smallLocker.take(mediumTicket);
     }
 }

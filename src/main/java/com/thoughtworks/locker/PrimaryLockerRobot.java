@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 
 import java.util.List;
 
@@ -25,6 +26,6 @@ public class PrimaryLockerRobot {
                 .filter(locker -> locker.isContain(mediumTicket))
                 .findFirst()
                 .map(locker -> locker.take(mediumTicket))
-                .orElse(null);
+                .orElseThrow(TicketInvalidException::new);
     }
 }

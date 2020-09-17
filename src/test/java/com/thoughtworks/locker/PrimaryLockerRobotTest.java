@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.FullCapacityException;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
@@ -50,5 +51,17 @@ public class PrimaryLockerRobotTest {
         assertNotNull(mediumTicket);
         assertEquals(Type.M, mediumTicket.getType());
         assertEquals(mediumBag, secondMediumLocker.take(mediumTicket));
+    }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_full_capacity_exception_when_save_bag_given_robot_manage_all_lockers_are_full() {
+        Locker firstMediumLocker = new Locker(Type.M, 1);
+        Locker secondMediumLocker = new Locker(Type.M, 1);
+        firstMediumLocker.save(new Bag(Type.M));
+        secondMediumLocker.save(new Bag(Type.M));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(asList(firstMediumLocker, secondMediumLocker));
+        Bag mediumBag = new Bag(Type.M);
+
+        primaryLockerRobot.save(mediumBag);
     }
 }

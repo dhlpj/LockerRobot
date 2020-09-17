@@ -1,5 +1,6 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.bag.SmallBag;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;

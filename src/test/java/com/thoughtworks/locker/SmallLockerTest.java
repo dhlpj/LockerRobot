@@ -2,6 +2,7 @@ package com.thoughtworks.locker;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SmallLockerTest {
@@ -22,5 +23,16 @@ public class SmallLockerTest {
         SmallBag smallBag = new SmallBag();
 
         smallLocker.save(smallBag);
+    }
+
+    @Test
+    public void should_return_small_bag_when_take_bag_given_small_locker_and_small_ticket() {
+        SmallLocker smallLocker = new SmallLocker(10);
+        SmallBag smallBag = new SmallBag();
+        SmallTicket smallTicket = smallLocker.save(smallBag);
+
+        SmallBag takenBag = smallLocker.take(smallTicket);
+
+        assertEquals(smallBag, takenBag);
     }
 }

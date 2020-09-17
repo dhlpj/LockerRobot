@@ -23,4 +23,8 @@ public class SmallLocker {
     private boolean isFull() {
         return ticketBagMap.size() >= capacity;
     }
+
+    public SmallBag take(SmallTicket smallTicket) {
+        return ticketBagMap.remove(smallTicket);
+    }
 }

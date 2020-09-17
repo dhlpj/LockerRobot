@@ -36,4 +36,19 @@ public class PrimaryLockerRobotTest {
         assertEquals(Type.M, mediumTicket.getType());
         assertEquals(mediumBag, firstMediumLocker.take(mediumTicket));
     }
+
+    @Test
+    public void should_bag_in_2nd_locker_and_return_medium_ticket_when_save_bag_given_robot_manage_1st_locker_is_full_2nd_with_free_capacity() {
+        Locker firstMediumLocker = new Locker(Type.M, 1);
+        Locker secondMediumLocker = new Locker(Type.M, 10);
+        firstMediumLocker.save(new Bag(Type.M));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(asList(firstMediumLocker, secondMediumLocker));
+        Bag mediumBag = new Bag(Type.M);
+
+        Ticket mediumTicket = primaryLockerRobot.save(mediumBag);
+
+        assertNotNull(mediumTicket);
+        assertEquals(Type.M, mediumTicket.getType());
+        assertEquals(mediumBag, secondMediumLocker.take(mediumTicket));
+    }
 }

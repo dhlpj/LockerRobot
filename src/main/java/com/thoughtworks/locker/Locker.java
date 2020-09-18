@@ -5,6 +5,7 @@ import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,5 +50,11 @@ public class Locker {
 
     public boolean isContain(Ticket ticket) {
         return ticketBagMap.containsKey(ticket);
+    }
+
+    public BigDecimal idleRate() {
+        BigDecimal freeCapacityDecimal = new BigDecimal(capacity - ticketBagMap.size());
+        BigDecimal totalCapacityDecimal = new BigDecimal(capacity);
+        return freeCapacityDecimal.divide(totalCapacityDecimal);
     }
 }

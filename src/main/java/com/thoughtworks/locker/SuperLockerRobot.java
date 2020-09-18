@@ -1,17 +1,20 @@
 package com.thoughtworks.locker;
 
-import com.thoughtworks.locker.enums.Type;
-
+import java.util.Comparator;
 import java.util.List;
 
 public class SuperLockerRobot {
-    private final List<Locker> lockers;
+    private final List<Locker> largeLockers;
 
-    public SuperLockerRobot(List<Locker> lockers) {
-        this.lockers = lockers;
+    public SuperLockerRobot(List<Locker> largeLockers) {
+        this.largeLockers = largeLockers;
     }
 
     public Ticket save(Bag largeBag) {
-        return new Ticket(Type.L);
+        return largeLockers.stream()
+                .filter(locker -> !locker.isFull())
+                .max(Comparator.comparing(Locker::idleRate))
+                .map(locker -> locker.save(largeBag))
+                .orElse(null);
     }
 }

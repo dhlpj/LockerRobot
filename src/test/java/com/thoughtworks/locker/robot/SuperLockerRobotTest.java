@@ -1,10 +1,12 @@
-package com.thoughtworks.locker;
+package com.thoughtworks.locker.robot;
 
+import com.thoughtworks.locker.Bag;
+import com.thoughtworks.locker.Locker;
+import com.thoughtworks.locker.Ticket;
 import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
-import com.thoughtworks.locker.robot.SuperLockerRobot;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;

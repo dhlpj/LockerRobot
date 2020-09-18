@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.ConfigurationErrorException;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.robot.PrimaryLockerRobot;
 import com.thoughtworks.locker.robot.SuperLockerRobot;
@@ -133,5 +134,14 @@ public class LockerRobotManagerTest {
         Bag takenBag = lockerRobotManager.take(largeTicket);
 
         assertEquals(largeBag, takenBag);
+    }
+
+    @Test(expected = ConfigurationErrorException.class)
+    public void should_throw_configuration_error_exception_when_configure_manager_with_not_small_locker() {
+        Locker mediumLocker = new Locker(Type.M, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 10)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
+     
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(mediumLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
     }
 }

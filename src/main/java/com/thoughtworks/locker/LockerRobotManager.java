@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.ConfigurationErrorException;
 import com.thoughtworks.locker.exception.IncorrectBagTypeException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.robot.PrimaryLockerRobot;
@@ -13,9 +15,19 @@ public class LockerRobotManager {
     private List<SuperLockerRobot> superLockerRobots;
 
     public LockerRobotManager(List<Locker> smallLockers, List<PrimaryLockerRobot> primaryLockerRobots, List<SuperLockerRobot> superLockerRobots) {
+        validateLockerType(smallLockers);
+
         this.smallLockers = smallLockers;
         this.primaryLockerRobots = primaryLockerRobots;
         this.superLockerRobots = superLockerRobots;
+    }
+
+    private void validateLockerType(List<Locker> smallLockers) {
+        boolean isLockerTypeNotMatched = smallLockers.stream()
+                .anyMatch(locker -> locker.getType() != Type.S);
+        if (isLockerTypeNotMatched) {
+            throw new ConfigurationErrorException();
+        }
     }
 
     public Ticket save(Bag bag) {

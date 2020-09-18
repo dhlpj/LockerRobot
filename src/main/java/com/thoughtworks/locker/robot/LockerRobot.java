@@ -14,13 +14,17 @@ public abstract class LockerRobot {
     protected List<Locker> lockers;
 
     public LockerRobot(List<Locker> lockers) {
-        boolean isLockerTypeMatched = lockers.stream()
-                .anyMatch(locker -> !isTypeMatched(locker.getType()));
-        if (isLockerTypeMatched) {
-            throw new ConfigurationErrorException();
-        }
+        validateLockerType(lockers);
 
         this.lockers = lockers;
+    }
+
+    private void validateLockerType(List<Locker> lockers) {
+        boolean isLockerTypeNotMatched = lockers.stream()
+                .anyMatch(locker -> !isTypeMatched(locker.getType()));
+        if (isLockerTypeNotMatched) {
+            throw new ConfigurationErrorException();
+        }
     }
 
     public Ticket save(Bag bag) {

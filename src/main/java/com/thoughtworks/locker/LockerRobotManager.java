@@ -35,6 +35,8 @@ public class LockerRobotManager {
                 return smallLockers.get(0).take(ticket);
             case M:
                 return primaryLockerRobots.get(0).take(ticket);
+            case L:
+                return superLockerRobots.get(0).take(ticket);
             default:
                 return null;
         }

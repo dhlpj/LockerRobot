@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.robot.SuperLockerRobot;
 import org.junit.Test;
 
@@ -48,6 +49,16 @@ public class SuperLockerRobotTest {
         assertNotNull(largeTicket);
         assertEquals(Type.L, largeTicket.getType());
         assertEquals(largeBag, firstLargeLocker.take(largeTicket));
+    }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_full_capacity_exception_when_save_bag_given_robot_manage_both_of_lockers_are_full() {
+        Locker firstLargeLocker = initLocker(Type.L, 1, 0);
+        Locker secondLargeLocker = initLocker(Type.L, 1, 0);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(asList(firstLargeLocker, secondLargeLocker));
+        Bag largeBag = new Bag(Type.L);
+
+        superLockerRobot.save(largeBag);
     }
 
     private Locker initLocker(Type type, int capacity, int freeCapacity) {

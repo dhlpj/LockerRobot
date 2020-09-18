@@ -3,6 +3,7 @@ package com.thoughtworks.locker.robot;
 import com.thoughtworks.locker.Locker;
 import com.thoughtworks.locker.Ticket;
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.FullCapacityException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +19,7 @@ public class SuperLockerRobot extends LockerRobot{
         return lockers.stream()
                 .filter(locker -> !locker.isFull())
                 .max(Comparator.comparing(Locker::idleRate))
-                .orElse(null);
+                .orElseThrow(FullCapacityException::new);
     }
 
     @Override

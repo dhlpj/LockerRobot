@@ -61,6 +61,18 @@ public class SuperLockerRobotTest {
         superLockerRobot.save(largeBag);
     }
 
+    @Test
+    public void should_return_bag_when_take_bag_given_robot_manage_1_locker_and_large_ticket() {
+        Locker largeLocker = initLocker(Type.L, 10, 10);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(largeLocker));
+        Bag largeBag = new Bag(Type.L);
+        Ticket largeTicket = superLockerRobot.save(largeBag);
+
+        Bag takenBag = superLockerRobot.take(largeTicket);
+
+        assertEquals(largeBag, takenBag);
+    }
+
     private Locker initLocker(Type type, int capacity, int freeCapacity) {
         Locker locker = new Locker(type, capacity);
         for (int i = capacity; i > freeCapacity; i--) {

@@ -102,7 +102,15 @@ Given：LockerRobotManager管理一个small的Locker且有剩余容量、两个r
 When：存包
 Then：存包失败，提示已满
 
-Given：LockerRobotManager管理一个small的Locker、两个robot，第一个是PrimaryLockerRobot（管理一个Locker），第二个是SuperLockerRobot（管理一个Locker），票
+Given：LockerRobotManager管理一个small的Locker、两个robot，第一个是PrimaryLockerRobot（管理一个Locker），第二个是SuperLockerRobot（管理一个Locker），small型号的票
+When：取包
+Then：返回票对应的包
+
+Given：LockerRobotManager管理一个small的Locker、两个robot，第一个是PrimaryLockerRobot（管理一个Locker），第二个是SuperLockerRobot（管理一个Locker），medium型号的票
+When：取包
+Then：返回票对应的包
+
+Given：LockerRobotManager管理一个small的Locker、两个robot，第一个是PrimaryLockerRobot（管理一个Locker），第二个是SuperLockerRobot（管理一个Locker），medium型号的票
 When：取包
 Then：返回票对应的包
 

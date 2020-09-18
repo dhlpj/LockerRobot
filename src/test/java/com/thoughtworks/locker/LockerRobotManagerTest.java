@@ -56,9 +56,8 @@ public class LockerRobotManagerTest {
     @Test(expected = FullCapacityException.class)
     public void should_throw_full_capacity_exception_when_save_medium_bag_given_manager_manage_1_small_locker_and_1_super_locker_robot_are_not_full_but_primary_locker_robot_is_full() {
         Locker smallLocker = new Locker(Type.S, 10);
-        Locker mediumLocker = new Locker(Type.M, 1);
-        mediumLocker.save(new Bag(Type.M));
-        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(mediumLocker));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 1)));
+        primaryLockerRobot.save(new Bag(Type.M));
         SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
         Bag mediumBag = new Bag(Type.M);
@@ -85,12 +84,25 @@ public class LockerRobotManagerTest {
     public void should_throw_full_capacity_exception_when_save_large_bag_given_manager_manage_1_small_locker_and_1_primary_locker_robot_are_not_full_but_super_locker_robot_is_full() {
         Locker smallLocker = new Locker(Type.S, 10);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 10)));
-        Locker largeLocker = new Locker(Type.L, 1);
-        largeLocker.save(new Bag(Type.L));
-        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(largeLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 1)));
+        superLockerRobot.save(new Bag(Type.L));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
         Bag largeBag = new Bag(Type.L);
 
         lockerRobotManager.save(largeBag);
+    }
+
+    @Test
+    public void should_return_bag_when_take_bag_given_manager_manage_1_small_locker_and_1_primary_locker_robot_and_1_super_locker_robot_and_correct_small_ticket() {
+        Locker smallLocker = new Locker(Type.S, 10);
+        Bag smallBag = new Bag(Type.S);
+        Ticket smallTicket = smallLocker.save(smallBag);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 10)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag takenBag = lockerRobotManager.take(smallTicket);
+
+        assertEquals(smallBag, takenBag);
     }
 }

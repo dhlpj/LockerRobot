@@ -28,4 +28,13 @@ public class LockerRobotManager {
                 return null;
         }
     }
+
+    public Bag take(Ticket ticket) {
+        switch (ticket.getType()) {
+            case S:
+                return smallLockers.get(0).take(ticket);
+            default:
+                return null;
+        }
+    }
 }

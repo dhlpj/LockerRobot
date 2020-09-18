@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.IncorrectBagTypeException;
+import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.robot.PrimaryLockerRobot;
 import com.thoughtworks.locker.robot.SuperLockerRobot;
 
@@ -25,7 +27,7 @@ public class LockerRobotManager {
             case L:
                 return superLockerRobots.get(0).save(bag);
             default:
-                return null;
+                throw new IncorrectBagTypeException();
         }
     }
 
@@ -38,7 +40,7 @@ public class LockerRobotManager {
             case L:
                 return superLockerRobots.get(0).take(ticket);
             default:
-                return null;
+                throw new IncorrectTicketTypeException();
         }
     }
 }

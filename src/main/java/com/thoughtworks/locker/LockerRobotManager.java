@@ -22,6 +22,8 @@ public class LockerRobotManager {
                 return smallLockers.get(0).save(bag);
             case M:
                 return primaryLockerRobots.get(0).save(bag);
+            case L:
+                return superLockerRobots.get(0).save(bag);
             default:
                 return null;
         }

@@ -8,4 +8,8 @@ public class Bag {
     public Bag(Type type) {
         this.type = type;
     }
+
+    public Type getType() {
+        return type;
+    }
 }

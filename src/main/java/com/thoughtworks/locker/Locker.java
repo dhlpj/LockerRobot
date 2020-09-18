@@ -57,4 +57,8 @@ public class Locker {
         BigDecimal totalCapacityDecimal = new BigDecimal(capacity);
         return freeCapacityDecimal.divide(totalCapacityDecimal);
     }
+
+    public Type getType() {
+        return type;
+    }
 }

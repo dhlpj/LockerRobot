@@ -48,6 +48,10 @@ Given：PrimaryLockerRobot管理1个medium的Locker，不是medium型号的票
 When：取包
 Then：取包失败，提示票的型号不对
 
+Given：PrimaryLockerRobot管理不是medium类型的locker
+When：配置PrimaryLockerRobot
+Then：配置失败
+
 ## SuperLockerRobot
 Given：SuperLockerRobot管理1个large的Locker且有剩余空间，包裹尺寸为L的包
 When：存包
@@ -76,6 +80,10 @@ Then：取包失败，提示票无效
 Given：SuperLockerRobot管理1个large的Locker，不是large型号的票
 When：取包
 Then：取包失败，提示票的型号不对
+
+Given：SuperLockerRobot管理不是large类型的locker
+When：配置SuperLockerRobot
+Then：配置失败
 
 ## LockerRobotManager
 Given：LockerRobotManager管理一个small的Locker且有剩余容量、两个robot，第一个是PrimaryLockerRobot（管理一个Locker）有剩余容量，第二个是SuperLockerRobot（管理一个Locker）也有剩余容量，包裹尺寸为S的包

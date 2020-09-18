@@ -3,6 +3,8 @@ package com.thoughtworks.locker.robot;
 import com.thoughtworks.locker.Bag;
 import com.thoughtworks.locker.Locker;
 import com.thoughtworks.locker.Ticket;
+import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.ConfigurationErrorException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 
@@ -12,16 +14,21 @@ public abstract class LockerRobot {
     protected List<Locker> lockers;
 
     public LockerRobot(List<Locker> lockers) {
+        boolean isLockerTypeMatched = lockers.stream()
+                .anyMatch(locker -> !isTypeMatched(locker.getType()));
+        if (isLockerTypeMatched) {
+            throw new ConfigurationErrorException();
+        }
+
         this.lockers = lockers;
     }
-
 
     public Ticket save(Bag bag) {
         return getAvailableLocker().save(bag);
     }
 
     public Bag take(Ticket ticket) {
-        if (!isTypeMatched(ticket)) {
+        if (!isTypeMatched(ticket.getType())) {
             throw new IncorrectTicketTypeException();
         }
 
@@ -34,5 +41,5 @@ public abstract class LockerRobot {
 
     protected abstract Locker getAvailableLocker();
 
-    protected abstract boolean isTypeMatched(Ticket ticket);
+    protected abstract boolean isTypeMatched(Type type);
 }

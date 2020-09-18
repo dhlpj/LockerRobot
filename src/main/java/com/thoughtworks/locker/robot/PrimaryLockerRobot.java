@@ -1,7 +1,6 @@
 package com.thoughtworks.locker.robot;
 
 import com.thoughtworks.locker.Locker;
-import com.thoughtworks.locker.Ticket;
 import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
 
@@ -21,7 +20,7 @@ public class PrimaryLockerRobot extends LockerRobot {
                 .orElseThrow(FullCapacityException::new);
     }
 
-    protected boolean isTypeMatched(Ticket ticket) {
-        return ticket.getType() == Type.M;
+    protected boolean isTypeMatched(Type type) {
+        return type == Type.M;
     }
 }

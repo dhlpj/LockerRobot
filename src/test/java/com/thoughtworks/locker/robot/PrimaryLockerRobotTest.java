@@ -4,6 +4,7 @@ import com.thoughtworks.locker.Bag;
 import com.thoughtworks.locker.Locker;
 import com.thoughtworks.locker.Ticket;
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.exception.ConfigurationErrorException;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
@@ -101,5 +102,11 @@ public class PrimaryLockerRobotTest {
         Ticket smallTicket = new Ticket(Type.S);
 
         primaryLockerRobot.take(smallTicket);
+    }
+
+    @Test(expected = ConfigurationErrorException.class)
+    public void should_throw_configuration_error_exception_when_configure_primary_locker_robot_given_robot_manage_not_medium_locker() {
+        Locker smallLocker = new Locker(Type.S, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(asList(smallLocker));
     }
 }

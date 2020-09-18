@@ -105,4 +105,19 @@ public class LockerRobotManagerTest {
 
         assertEquals(smallBag, takenBag);
     }
+
+
+    @Test
+    public void should_return_bag_when_take_bag_given_manager_manage_1_small_locker_and_1_primary_locker_robot_and_1_super_locker_robot_and_correct_medium_ticket() {
+        Locker smallLocker = new Locker(Type.S, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 10)));
+        Bag mediumBag = new Bag(Type.M);
+        Ticket mediumTicket = primaryLockerRobot.save(mediumBag);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+
+        Bag takenBag = lockerRobotManager.take(mediumTicket);
+
+        assertEquals(mediumBag, takenBag);
+    }
 }

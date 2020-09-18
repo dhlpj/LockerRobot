@@ -33,6 +33,8 @@ public class LockerRobotManager {
         switch (ticket.getType()) {
             case S:
                 return smallLockers.get(0).take(ticket);
+            case M:
+                return primaryLockerRobots.get(0).take(ticket);
             default:
                 return null;
         }

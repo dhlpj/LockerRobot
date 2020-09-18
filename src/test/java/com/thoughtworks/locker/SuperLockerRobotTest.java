@@ -2,6 +2,7 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 import com.thoughtworks.locker.robot.SuperLockerRobot;
 import org.junit.Test;
 
@@ -71,6 +72,16 @@ public class SuperLockerRobotTest {
         Bag takenBag = superLockerRobot.take(largeTicket);
 
         assertEquals(largeBag, takenBag);
+    }
+
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_invalid_exception_when_take_bag_given_robot_manage_1_locker_and_invalid_large_ticket() {
+        Locker largeLocker = initLocker(Type.L, 10, 10);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(largeLocker));
+        superLockerRobot.save(new Bag(Type.L));
+        Ticket invalidLargeTicket = new Ticket(Type.L);
+
+        superLockerRobot.take(invalidLargeTicket);
     }
 
     private Locker initLocker(Type type, int capacity, int freeCapacity) {

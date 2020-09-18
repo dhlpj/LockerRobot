@@ -37,4 +37,19 @@ public class LockerRobotManagerTest {
 
         lockerRobotManager.save(smallBag);
     }
+
+    @Test
+    public void should_save_bag_in_primary_locker_robot_and_return_medium_ticket_when_save_medium_bag_given_manager_manage_1_small_locker_and_1_primary_locker_robot_and_1_super_locker_robot_and_all_with_free_capacity() {
+        Locker smallLocker = new Locker(Type.S, 10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(new Locker(Type.M, 10)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        Bag mediumBag = new Bag(Type.M);
+
+        Ticket mediumTicket = lockerRobotManager.save(mediumBag);
+
+        assertEquals(mediumBag, primaryLockerRobot.take(mediumTicket));
+        assertNotNull(mediumTicket);
+        assertEquals(Type.M, mediumTicket.getType());
+    }
 }

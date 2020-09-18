@@ -1,6 +1,5 @@
 package com.thoughtworks.locker;
 
-import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.robot.PrimaryLockerRobot;
 import com.thoughtworks.locker.robot.SuperLockerRobot;
 
@@ -18,9 +17,13 @@ public class LockerRobotManager {
     }
 
     public Ticket save(Bag bag) {
-        if (bag.getType() == Type.S) {
-            return smallLockers.get(0).save(bag);
+        switch (bag.getType()) {
+            case S:
+                return smallLockers.get(0).save(bag);
+            case M:
+                return primaryLockerRobots.get(0).save(bag);
+            default:
+                return null;
         }
-        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.thoughtworks.locker.enums.Type;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.IncorrectTicketTypeException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import com.thoughtworks.locker.robot.PrimaryLockerRobot;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;

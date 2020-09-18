@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.enums.Type;
+import com.thoughtworks.locker.robot.SuperLockerRobot;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;

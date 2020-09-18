@@ -107,6 +107,7 @@ public class PrimaryLockerRobotTest {
     @Test(expected = ConfigurationErrorException.class)
     public void should_throw_configuration_error_exception_when_configure_primary_locker_robot_given_robot_manage_not_medium_locker() {
         Locker smallLocker = new Locker(Type.S, 10);
+
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(asList(smallLocker));
     }
 }

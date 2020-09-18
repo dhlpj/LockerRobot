@@ -52,4 +52,17 @@ public class LockerRobotManagerTest {
         assertNotNull(mediumTicket);
         assertEquals(Type.M, mediumTicket.getType());
     }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_full_capacity_exception_when_save_medium_bag_given_manager_manage_1_small_locker_and_1_super_locker_robot_are_not_full_but_primary_locker_robot_is_full() {
+        Locker smallLocker = new Locker(Type.S, 10);
+        Locker mediumLocker = new Locker(Type.M, 1);
+        mediumLocker.save(new Bag(Type.M));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(singletonList(mediumLocker));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(singletonList(new Locker(Type.L, 10)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(singletonList(smallLocker), singletonList(primaryLockerRobot), singletonList(superLockerRobot));
+        Bag mediumBag = new Bag(Type.M);
+
+        lockerRobotManager.save(mediumBag);
+    }
 }
